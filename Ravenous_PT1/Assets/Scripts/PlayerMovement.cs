@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
                 Jump();
 
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-                print("No Implementation.");
+                print("No Implementation");
         }
         else
             _wallJumpCooldown += Time.deltaTime;
