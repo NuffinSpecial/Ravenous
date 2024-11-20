@@ -79,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
 
             // Check for Down Key Press when in Air
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-                MoveDownInAir();
+                FastFall();
             else
                 _currentFallSpeed = 0; // Reset fall speed if the down key is released
         }
@@ -122,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Function to add an accelerating downward force when the player is airborne and presses the down key
-    private void MoveDownInAir()
+    private void FastFall()
     {
         // Only apply the downward force if the player is in the air and not grounded
         if (IsGrounded()) return;
