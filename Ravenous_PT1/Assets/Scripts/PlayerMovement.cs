@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Grab references
         _body = GetComponent<Rigidbody2D>();
+        _body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         _boxCollider = GetComponent<BoxCollider2D>();
         // Save initial gravity scale
         _gScale = _body.gravityScale;
@@ -78,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
                 Jump();
 
             // Check for Down Key Press when in Air
-            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && !Input.GetKey(KeyCode.Space))
                 FastFall();
             else
                 _currentFallSpeed = 0; // Reset fall speed if the down key is released
@@ -109,10 +110,12 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        var raycastGround = Physics2D.BoxCast(_boxCollider.bounds.center, _boxCollider.bounds.size,
-            0, Vector2.down, 0.05f, groundLayer);
-        return raycastGround.collider is not null;
+        var raycastGround = Physics2D.BoxCast(_boxCollider.bounds.center, 
+            _boxCollider.bounds.size, // Reset to the collider size
+            0, Vector2.down, 0.05f, groundLayer); // Small offset for ground check
+        return raycastGround.collider;
     }
+
 
     private bool OnWall()
     {
@@ -124,16 +127,13 @@ public class PlayerMovement : MonoBehaviour
     // Function to add an accelerating downward force when the player is airborne and presses the down key
     private void FastFall()
     {
-        // Only apply the downward force if the player is in the air and not grounded
-        if (IsGrounded()) return;
-        // Increase the current fall speed gradually, up to the maximum fall speed
+        // Allow fast fall only if the player is airborne and not moving upward
+        if (IsGrounded() || _body.velocity.y > 0) return;
+
+        // Increase fall speed incrementally up to maxFallSpeed
         _currentFallSpeed = Mathf.Min(_currentFallSpeed + fallAcceleration * Time.deltaTime, maxFallSpeed);
 
-        // Add the downward velocity incrementally to the current vertical velocity
-        _body.velocity = new Vector2(_body.velocity.x, _body.velocity.y - _currentFallSpeed);
-
-        // Optional: Reset wall jump cooldown to allow immediate jump after fast-falling
-        _wallJumpCooldown = 0.5f; // Adjust cooldown if necessary
+        // Apply downward velocity clamped to maxFallSpeed
+        _body.velocity = new Vector2(_body.velocity.x, Mathf.Max(_body.velocity.y - _currentFallSpeed, -maxFallSpeed));
     }
-
 }

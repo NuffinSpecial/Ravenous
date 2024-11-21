@@ -469,7 +469,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -3.1, z: 0}
-  m_LocalScale: {x: 10, y: 0.2, z: 1}
+  m_LocalScale: {x: 10, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -648,6 +648,8 @@ MonoBehaviour:
   moveSpeed: 6
   jumpPower: 10
   accX: 10
+  maxFallSpeed: 30
+  fallAcceleration: 5
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -778,8 +780,8 @@ Transform:
   m_GameObject: {fileID: 2082400168}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8, y: 1.9, z: 0}
-  m_LocalScale: {x: 6, y: 0.2, z: 1}
+  m_LocalPosition: {x: -8, y: 1.5, z: 0}
+  m_LocalScale: {x: 6, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
