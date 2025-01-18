@@ -376,6 +376,7 @@
 "Assets/Scripts/EnemyManager.cs"
 "Assets/Scripts/PlayerAttacks.cs"
 "Assets/Scripts/PlayerMovement.cs"
+"Assets/Scripts/UI.cs"
 -langversion:9.0
 /deterministic
 /optimize+
